@@ -21,17 +21,6 @@
 - **설치형**: `미니 유튜브 Setup x.x.x.exe` — 설치 후 바로가기 생성
 - **포터블**: `미니 유튜브 x.x.x.exe` — 설치 없이 바로 실행
 
-### Claude Code로 빌드 (제일 쉬움!)
-
-터미널이나 빌드 과정이 어렵다면, [Claude Code](https://claude.ai/claude-code)를 사용해보세요.
-
-1. Claude Code 설치 후 이 프로젝트 폴더에서 실행
-2. 아래처럼 말하면 알아서 빌드해줍니다:
-
-> Windows: `이 프로젝트 Windows용으로 빌드해줘`
->
-> macOS: `이 프로젝트 macOS용으로 빌드해줘`
-
 ## 직접 빌드하기
 
 소스코드에서 직접 빌드하고 싶다면 아래 가이드를 따라하세요.
@@ -83,6 +72,17 @@ npx electron-builder --mac
 ```bash
 cp -r "dist/mac-arm64/미니 유튜브.app" /Applications/
 ```
+
+### Claude Code로 빌드 (제일 쉬움!)
+
+터미널이나 빌드 과정이 어렵다면, [Claude Code](https://claude.ai/claude-code)를 사용해보세요.
+
+1. Claude Code 설치 후 이 프로젝트 폴더에서 실행
+2. 아래처럼 말하면 알아서 빌드해줍니다:
+
+> Windows: `이 프로젝트 Windows용으로 빌드해줘`
+>
+> macOS: `이 프로젝트 macOS용으로 빌드해줘`
 
 ### 개발 모드로 실행
 
