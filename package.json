@@ -1,0 +1,74 @@
+{
+  "name": "mini-youtuber-viewer",
+  "version": "0.2.0",
+  "description": "A cute always-on-top mini YouTube viewer",
+  "author": "R",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "appId": "com.nonna.miniyoutuberviewer",
+    "productName": "미니 유튜브",
+    "copyright": "Copyright (c) R",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "build/**/*",
+      "index.html",
+      "main.js",
+      "preload.js",
+      "renderer.js",
+      "styles.css",
+      "package.json",
+      "node_modules/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "build/r-icon.ico",
+        "to": "build/r-icon.ico"
+      }
+    ],
+    "extraMetadata": {
+      "main": "main.js"
+    },
+    "asar": true,
+    "npmRebuild": false,
+    "win": {
+      "icon": "build/r-icon.ico",
+      "signAndEditExecutable": false,
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "build/r-icon.ico",
+      "uninstallerIcon": "build/r-icon.ico",
+      "installerHeaderIcon": "build/r-icon.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  },
+  "devDependencies": {
+    "electron": "^37.2.0",
+    "electron-builder": "^26.8.1",
+    "rcedit": "^5.0.2"
+  }
+}

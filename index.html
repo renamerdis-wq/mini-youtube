@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>미니 유튜브</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app" class="app">
+    <div id="frame" class="frame skin-frog" data-skin="frog">
+      <div id="frameImage" class="frame-image" style="display:none;"></div>
+      <div id="decoTop" class="deco-top"></div>
+
+      <div class="drag-bar">
+        <div class="drag-dots">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+
+      <div class="screen-area">
+        <div id="screenWrap" class="screen-wrap">
+          <div class="drag-hitbox drag-hitbox-top" aria-hidden="true"></div>
+          <div class="drag-hitbox drag-hitbox-left" aria-hidden="true"></div>
+          <div class="drag-hitbox drag-hitbox-right" aria-hidden="true"></div>
+
+          <webview
+            id="playerView"
+            class="player-view"
+            allowpopups
+            partition="persist:youtube"
+            src="about:blank"
+          ></webview>
+
+          <div id="hoverOverlay" class="hover-overlay">
+            <button id="btnBack" class="btn-circle" title="뒤로가기">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"/>
+              </svg>
+            </button>
+            <button id="btnSettings" class="btn-circle" title="설정">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+              </svg>
+            </button>
+          </div>
+
+          <div id="welcomeScreen" class="welcome-screen">
+            <div class="welcome-face">( ฅ^･ω･^ ฅ)</div>
+            <div class="welcome-text">URL을 입력해서<br/>영상을 불러오세요</div>
+            <div class="welcome-hint">우클릭하면 깔끔 모드</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="decoBottom" class="deco-bottom"></div>
+      <div id="decoEyes" class="deco-eyes"></div>
+
+      <div id="resizeHandle" class="resize-handle">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" opacity="0.5">
+          <circle cx="10" cy="2" r="1.2"/><circle cx="6" cy="6" r="1.2"/><circle cx="10" cy="6" r="1.2"/><circle cx="2" cy="10" r="1.2"/><circle cx="6" cy="10" r="1.2"/><circle cx="10" cy="10" r="1.2"/>
+        </svg>
+      </div>
+    </div>
+
+    <div id="settingsPanel" class="settings-panel" aria-hidden="true">
+      <div class="panel-header">
+        <span class="panel-title">설정</span>
+        <button id="btnPanelClose" class="btn-tiny" title="닫기">×</button>
+      </div>
+
+      <div class="panel-section">
+        <label class="panel-label">YouTube URL</label>
+        <div class="url-row">
+          <input id="urlInput" type="text" class="url-input" placeholder="유튜브 링크를 붙여넣기..." />
+          <button id="btnLoad" class="btn-accent">열기</button>
+        </div>
+      </div>
+
+      <div class="panel-section controls-row">
+        <button id="btnYouTube" class="btn-soft" style="flex:1;">🏠 YouTube</button>
+        <button id="btnLogin" class="btn-soft" style="flex:1;">🔐 YouTube 로그인</button>
+      </div>
+
+      <div class="panel-section">
+        <label class="panel-label">스킨</label>
+        <div class="skin-grid">
+          <button class="skin-btn is-active" data-skin="frog" title="개구리">🐸</button>
+          <button class="skin-btn" data-skin="bunny" title="토끼">🐰</button>
+          <button class="skin-btn" data-skin="bear" title="곰">🐻</button>
+          <button class="skin-btn" data-skin="dino" title="공룡">🦕</button>
+          <button class="skin-btn" data-skin="jar" title="러브병">🫙</button>
+          <button class="skin-btn" data-skin="laptop" title="노트북">💻</button>
+          <button class="skin-btn" data-skin="balletcore" title="발레코어">🎀</button>
+          <button class="skin-btn" data-skin="devilCat" title="데빌캣">😈</button>
+          <button class="skin-btn" data-skin="cherryCake" title="체리케이크">🍒</button>
+        </div>
+      </div>
+
+      <div class="panel-section controls-row">
+        <button id="btnPin" class="btn-soft pin-on" title="항상 위">📌 고정</button>
+        <div class="zoom-group">
+          <button id="btnZoomOut" class="btn-soft">-</button>
+          <span id="scaleLabel" class="scale-label">100%</span>
+          <button id="btnZoomIn" class="btn-soft">+</button>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <label class="panel-label">Opacity</label>
+        <div class="opacity-row">
+          <input id="opacitySlider" class="opacity-slider" type="range" min="20" max="100" step="5" value="100" />
+          <span id="opacityLabel" class="opacity-label">100%</span>
+        </div>
+      </div>
+
+      <div class="panel-section controls-row end">
+        <button id="btnMinimize" class="btn-soft">최소화</button>
+        <button id="btnClose" class="btn-danger">플레이어 닫기</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="cleanOverlay" class="clean-overlay" style="display:none;">
+    <webview
+      id="cleanView"
+      class="clean-view"
+      allowpopups
+      partition="persist:youtube"
+      src="about:blank"
+    ></webview>
+    <div class="clean-hint" id="cleanHint">우클릭으로 돌아가기</div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
